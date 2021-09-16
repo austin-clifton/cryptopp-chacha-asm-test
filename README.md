@@ -15,7 +15,6 @@ After seeing this behavior in a production environment, I wrote an isolated fuzz
 Included are:
 - the Visual Studio solution and project used to build the test executable
 - the single source file `src/main.cpp`
-- the statically built `libs/debug/cryptlib.lib`, and `libs/debug/cryptlib-no-avx.lib` which was built with the preprocessor macros `CRYPTOPP_DISABLE_AVX=1` and `CRYPTOPP_DISABLE_AVX2=1`
 - a reproducible example in the `example/` directory:
     - a minimal built executable `cryptopp-chacha-asm-test.exe` with hard-coded key, nonce, and filepath
     - the input file which causes the behavior `run_459_file_76.bin`
@@ -50,7 +49,9 @@ Out of about ~50GB worth of 1MB files which were created and then encrypted on t
 
 ## Reproduction
 
-The `example/` directory contains a ready-to-run executable. Or, you can build the source yourself using the provided Visual Studio solution. The provided cryptopp libraries are built as x64 Debug libraries. The original fuzz test code is commented out. One key/nonce/file combination which produce the flipped bit is hard-coded into `main()`.
+The `example/` directory contains a ready-to-run executable. Or, you can build the source yourself using the provided Visual Studio solution. You will need to put a static x64 \MTd `cryptlib.lib` in the `libs/debug/` directory.
+
+The original fuzz test code is commented out. One key/nonce/file combination which produce the flipped bit is hard-coded into `main()`.
 
 The reproducing combo is:
 - file `run_459_file_76.bin` (from fuzz test run 459, file 76)
